@@ -34,6 +34,22 @@ public class ArticleFileService {
         return (List<ArticleFile>) articleFileRepository.findAll();
     }
 
+    public List<ArticleFile> getAllArticleFilesWhereTypeEqualsImage(Long id, String type){
+        if (articleRepository.existsById(id)) {
+            return  articleFileRepository.findAllByArticleIdAndTypeContaining(id,type);
+
+        }
+        throw new RuntimeException("ArticleFile not found");
+    }
+
+    public List<ArticleFile> getAllArticleFilesWhereTypeNotEqualsImage(Long id, String type){
+        if (articleRepository.existsById(id)) {
+            return  articleFileRepository.findAllByArticleIdAndTypeNotContaining(id,type);
+
+        }
+        throw new RuntimeException("ArticleFile not found");
+    }
+
     public Optional<ArticleFile> getArticleFileById(Long id) {
         return articleFileRepository.findById(id);
     }
@@ -62,9 +78,16 @@ public class ArticleFileService {
         ArticleFile file = articleFileRepository.findById(fileId).orElse(null);
         if (file != null) {
             try {
-                Path filePath = Paths.get(storagePath + "/"+ file.getFilename());
-                if (Files.exists(filePath)) {
-                    Files.delete(filePath);
+                if(file.getType().contains("image")){
+                    Path filePath = Paths.get(storagePath + "/images/"+ file.getFilename());
+                    if (Files.exists(filePath)) {
+                        Files.delete(filePath);
+                    }
+                } else {
+                    Path filePath = Paths.get(storagePath + "/files/"+ file.getFilename());
+                    if (Files.exists(filePath)) {
+                        Files.delete(filePath);
+                    }
                 }
                 articleFileRepository.delete(file);
             } catch (IOException e) {

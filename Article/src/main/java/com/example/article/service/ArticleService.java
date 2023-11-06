@@ -107,12 +107,16 @@ public class ArticleService {
                 String fileType = file.getContentType();
                 articleFile.setType(fileType);
 
-                // Enregistrez l'instance ArticleFile dans la base de données
                 articleFileRepository.save(articleFile);
 
-                // Enregistrez le fichier sur le système de fichiers
-                String filePath = storagePath + File.separator + uniqueFileName;
+                String filePath;
+                if(fileType != null && fileType.contains("image")){
+                    filePath = storagePath + File.separator + "images/" + uniqueFileName;
+                } else {
+                    filePath = storagePath + File.separator + "files/" + uniqueFileName;
+                }
                 Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
