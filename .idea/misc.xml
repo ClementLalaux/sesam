@@ -8,6 +8,8 @@
         <option value="$PROJECT_DIR$/Article/pom.xml" />
         <option value="$PROJECT_DIR$/Fichier/pom.xml" />
         <option value="$PROJECT_DIR$/Mail/pom.xml" />
+        <option value="$PROJECT_DIR$/Texte/pom.xml" />
+        <option value="$PROJECT_DIR$/Image/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

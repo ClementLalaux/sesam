@@ -1,4 +1,4 @@
-package com.example.article.dto;
+package com.example.texte.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleResponseDTO {
-    private String titre;
-    private String publication;
+public class TexteResponseDTO {
     private String contenu;
-    private boolean statut;
+    private Long position;
+    private String page;
     private Long utilisateurId;
 }

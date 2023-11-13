@@ -34,20 +34,19 @@ public class ArticleService {
     @Autowired
     private ArticleFileService articleFileService;
 
-    @Autowired
-    private Mapper mapper;
+    private final Mapper mapper;
 
     @Value("${app.file.upload-dir}")
     private String storagePath;
 
-    public ArticleService(ArticleRepository articleRepository) {
+    public ArticleService(ArticleRepository articleRepository, Mapper mapper) {
         this.articleRepository = articleRepository;
+        this.mapper = mapper;
     }
 
 
     public Article createArticle(Article article){
-        Article newArticle = articleRepository.save(article);
-        return newArticle;
+        return articleRepository.save(article);
     }
 
     public List<Article> getAllArticles(){
@@ -74,7 +73,8 @@ public class ArticleService {
             article1.setStatut(article.isStatut());
             article1.setUtilisateurId(article.getUtilisateurId());
             articleRepository.save(article1);
-            return mapper.mapToDto(article1);
+            ArticleResponseDTO articleResponseDTO = mapper.mapToDto(article1);
+            return articleResponseDTO;
         }
         throw new RuntimeException("Not found");
     }

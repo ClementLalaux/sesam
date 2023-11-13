@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.1.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>Article</artifactId>
+    <artifactId>Texte</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Article</name>
-    <description>Article</description>
+    <name>Texte</name>
+    <description>Texte</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -25,12 +25,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -78,3 +72,4 @@
     </build>
 
 </project>
+
