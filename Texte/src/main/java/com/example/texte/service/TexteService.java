@@ -8,6 +8,7 @@ import com.example.texte.tool.RestClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TexteService {
@@ -27,16 +28,17 @@ public class TexteService {
     }
 
     public Texte getById(Long id){
-        if(texteRepository.findById(id).isPresent()){
-            Texte texte = texteRepository.findById(id).get();
-            return texte;
+        Optional<Texte> texte = texteRepository.findById(id);
+        if(texte.isPresent()){
+            return texte.get();
         }
         throw new RuntimeException("Not found");
     }
 
     public List<Texte> getTextesByPage(String page) {
-        if(texteRepository.findAllByPage(page) != null){
-            return texteRepository.findAllByPage(page);
+       List<Texte> texteList = texteRepository.findAllByPage(page);
+        if(texteList != null){
+            return texteList;
         }
         throw new RuntimeException("Not found");
     }

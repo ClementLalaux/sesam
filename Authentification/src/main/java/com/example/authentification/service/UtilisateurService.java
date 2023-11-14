@@ -2,6 +2,7 @@ package com.example.authentification.service;
 
 import com.example.authentification.entity.Utilisateur;
 import com.example.authentification.repository.UtilisateurRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class UtilisateurService {
+
     private final UtilisateurRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

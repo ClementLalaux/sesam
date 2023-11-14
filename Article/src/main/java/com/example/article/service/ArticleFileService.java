@@ -19,15 +19,16 @@ public class ArticleFileService {
 
     private final ArticleFileRepository articleFileRepository;
 
-    @Autowired
-    private ArticleRepository articleRepository;
+
+    private final ArticleRepository articleRepository;
 
     @Value("${app.file.upload-dir}")
     private String storagePath;
 
     @Autowired
-    public ArticleFileService(ArticleFileRepository articleFileRepository) {
+    public ArticleFileService(ArticleFileRepository articleFileRepository, ArticleRepository articleRepository) {
         this.articleFileRepository = articleFileRepository;
+        this.articleRepository = articleRepository;
     }
 
     public List<ArticleFile> getAllArticleFiles() {
@@ -78,12 +79,12 @@ public class ArticleFileService {
         ArticleFile file = articleFileRepository.findById(fileId).orElse(null);
         if (file != null) {
             try {
-                if(file.getType().contains("image")){
+                if(file.getType() != null && file.getType().contains("image")){
                     Path filePath = Paths.get(storagePath + "/images/"+ file.getFilename());
                     if (Files.exists(filePath)) {
                         Files.delete(filePath);
                     }
-                } else {
+                } else if(file.getType() != null){
                     Path filePath = Paths.get(storagePath + "/files/"+ file.getFilename());
                     if (Files.exists(filePath)) {
                         Files.delete(filePath);

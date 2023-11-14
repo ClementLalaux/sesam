@@ -2,6 +2,8 @@ package com.example.image.service;
 
 import com.example.image.entity.Image;
 import com.example.image.repository.ImageRepository;
+import jakarta.persistence.Access;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,12 +24,20 @@ import java.util.UUID;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-
-    @Value("${app.file.upload-dir}")
     private String storagePath;
 
-    public ImageService(ImageRepository imageRepository) {
+
+    public ImageService(ImageRepository imageRepository, @Value("${app.file.upload-dir}") String storagePath) {
         this.imageRepository = imageRepository;
+        this.storagePath = storagePath;
+    }
+
+    public void setStoragePath(String path) {
+        this.storagePath = path;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
     }
 
     public List<Image> getAllImages(){
@@ -35,15 +45,17 @@ public class ImageService {
     }
 
     public List<Image> getAllImagesByPage(String page){
-        if(imageRepository.findAllByPage(page) != null){
-            return (List<Image>) imageRepository.findAllByPage(page);
+        List<Image> imageList = imageRepository.findAllByPage(page);
+        if(imageList != null){
+            return imageList;
         }
         throw new RuntimeException("Not found");
     }
 
     public Image getImageById(Long id){
-        if(imageRepository.findById(id).isPresent()){
-            return imageRepository.findById(id).get();
+        Optional<Image> imageOptional = imageRepository.findById(id);
+        if(imageOptional.isPresent()){
+            return imageOptional.get();
         }
         throw new RuntimeException("Not found");
     }
@@ -60,7 +72,8 @@ public class ImageService {
                     .page(page)
                     .build();
             imageRepository.save(image1);
-            String filePath = storagePath + File.separator + uniqueFileName;
+            String storagePathHere = getStoragePath();
+            String filePath = storagePathHere + File.separator + uniqueFileName;
             Files.copy(image.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
             return image1;
         } catch (IOException e) {

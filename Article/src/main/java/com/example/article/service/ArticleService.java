@@ -8,7 +8,6 @@ import com.example.article.repository.ArticleFileRepository;
 import com.example.article.repository.ArticleRepository;
 import com.example.article.tool.RestClient;
 import com.example.article.utils.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -28,19 +27,21 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    @Autowired
-    private ArticleFileRepository articleFileRepository;
 
-    @Autowired
-    private ArticleFileService articleFileService;
+    private final ArticleFileRepository articleFileRepository;
+
+
+    private final ArticleFileService articleFileService;
 
     private final Mapper mapper;
 
     @Value("${app.file.upload-dir}")
     private String storagePath;
 
-    public ArticleService(ArticleRepository articleRepository, Mapper mapper) {
+    public ArticleService(ArticleRepository articleRepository, ArticleFileRepository articleFileRepository, ArticleFileService articleFileService, Mapper mapper) {
         this.articleRepository = articleRepository;
+        this.articleFileRepository = articleFileRepository;
+        this.articleFileService = articleFileService;
         this.mapper = mapper;
     }
 

@@ -2,7 +2,6 @@ package com.example.mail.controller;
 
 import com.example.mail.dto.EmailData;
 import com.example.mail.service.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 public class MailController {
 
-    @Autowired
-    private MailService emailService;
+
+    private final MailService emailService;
+
+    public MailController(MailService emailService) {
+        this.emailService = emailService;
+    }
+
     @PostMapping("send")
     public ResponseEntity<String> sendEmail(@RequestBody EmailData emailData) {
         try {
@@ -21,9 +25,11 @@ public class MailController {
             String to = emailData.getRecipient();
             String subject = emailData.getSubject();
             String text = emailData.getBody();
-
-            emailService.sendEmail(to, subject, text);
-            return ResponseEntity.ok("E-mail envoyé avec succès !");
+            if(emailService.sendEmail(to, subject, text)){
+                return ResponseEntity.ok("E-mail envoyé avec succès !");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'envoi de l'e-mail.");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'envoi de l'e-mail.");
         }
