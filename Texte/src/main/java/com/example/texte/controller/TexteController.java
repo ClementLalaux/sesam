@@ -41,7 +41,7 @@ public class TexteController {
         }
     }
 
-    @GetMapping("{page}")
+    @GetMapping("page/{page}")
     public ResponseEntity<List<Texte>> getByPage(@PathVariable(value = "page") String page){
         try {
             List<Texte> textes = texteService.getTextesByPage(page);

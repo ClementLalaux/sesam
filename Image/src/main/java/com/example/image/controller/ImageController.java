@@ -83,7 +83,7 @@ public class ImageController {
     public ResponseEntity<String> addImage(@RequestParam("file") MultipartFile file,@RequestParam("position") Long position, @RequestParam("page") String page){
         try {
             imageService.addImage(file,position,page);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Image ajouté avec succès.");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Image modifié avec succès.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de l'ajout du fichier : " + e.getMessage());
         }
@@ -93,7 +93,7 @@ public class ImageController {
     public ResponseEntity<String> deleteImage(@PathVariable("id") Long id){
         try {
             imageService.deleteImage(id);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Image ajouté avec succès.");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Image supprimé avec succès.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de l'ajout du fichier : " + e.getMessage());
         }

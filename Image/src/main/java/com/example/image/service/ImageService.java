@@ -91,6 +91,7 @@ public class ImageService {
                     imageRepository.delete(image.get());
                     return true;
                 } else {
+                    imageRepository.delete(image.get());
                     return false;
                 }
             } catch (IOException e) {
