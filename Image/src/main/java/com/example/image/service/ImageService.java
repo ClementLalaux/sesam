@@ -45,7 +45,7 @@ public class ImageService {
     }
 
     public List<Image> getAllImagesByPage(String page){
-        List<Image> imageList = imageRepository.findAllByPage(page);
+        List<Image> imageList = imageRepository.findAllByPageOrderByPosition(page);
         if(imageList != null){
             return imageList;
         }

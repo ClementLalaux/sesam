@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -94,5 +96,14 @@ public class ArticleFileController {
         }
     }
 
+    @PutMapping("/updateFile/{id}")
+    public ResponseEntity<String> updateImage(@PathVariable("id") Long id,@RequestParam("file") MultipartFile file){
+        try {
+            articleFileService.updateArticleFile(id,file);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Fichier modifiée avec succès.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de l'ajout du fichier : " + e.getMessage());
+        }
+    }
 
 }

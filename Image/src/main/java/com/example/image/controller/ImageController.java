@@ -31,10 +31,10 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("{imageName}")
+    @GetMapping("/find/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
         try {
-            Path imagePath = Paths.get(storagePath+"/images").resolve(imageName);
+            Path imagePath = Paths.get(storagePath+"/").resolve(imageName);
             Resource resource = new UrlResource(imagePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {

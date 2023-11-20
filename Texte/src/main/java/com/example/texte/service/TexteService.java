@@ -36,7 +36,7 @@ public class TexteService {
     }
 
     public List<Texte> getTextesByPage(String page) {
-       List<Texte> texteList = texteRepository.findAllByPage(page);
+       List<Texte> texteList = texteRepository.findAllByPageOrderByPosition(page);
         if(texteList != null){
             return texteList;
         }

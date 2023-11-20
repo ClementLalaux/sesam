@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TexteRepository extends CrudRepository<Texte,Long> {
 
-    public List<Texte> findAllByPage(String page);
+    public List<Texte> findAllByPageOrderByPosition(String page);
 
 }

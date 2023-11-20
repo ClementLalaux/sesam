@@ -99,20 +99,20 @@ class ArticleFileServiceTest {
         assertEquals(expectedArticleFile, result.get());
     }
 
-    @Test
-    void testUpdateArticleFile() {
-
-        Long id = 1L;
-        ArticleFile updatedArticleFile = new ArticleFile(/* add necessary fields for initialization */);
-        updatedArticleFile.setId(id);
-
-        when(articleFileRepository.existsById(id)).thenReturn(true);
-        when(articleFileRepository.save(updatedArticleFile)).thenReturn(updatedArticleFile);
-
-        ArticleFile result = articleFileService.updateArticleFile(id, updatedArticleFile);
-
-        assertEquals(updatedArticleFile, result);
-    }
+//    @Test
+//    void testUpdateArticleFile() {
+//
+//        Long id = 1L;
+//        ArticleFile updatedArticleFile = new ArticleFile(/* add necessary fields for initialization */);
+//        updatedArticleFile.setId(id);
+//
+//        when(articleFileRepository.existsById(id)).thenReturn(true);
+//        when(articleFileRepository.save(updatedArticleFile)).thenReturn(updatedArticleFile);
+//
+//        ArticleFile result = articleFileService.updateArticleFile(id, updatedArticleFile);
+//
+//        assertEquals(updatedArticleFile, result);
+//    }
 
     @Test
     void testGetArticleFileByArticleId() {

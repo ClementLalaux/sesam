@@ -6,13 +6,19 @@ import com.example.article.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ArticleFileService {
@@ -59,12 +65,40 @@ public class ArticleFileService {
         return articleFileRepository.save(articleFile);
     }
 
-    public ArticleFile updateArticleFile(Long id, ArticleFile updatedArticleFile) {
-        if (articleFileRepository.existsById(id)) {
-            updatedArticleFile.setId(id);
-            return articleFileRepository.save(updatedArticleFile);
+    public ArticleFile updateArticleFile(Long id, MultipartFile updatedArticleFile) {
+        try{
+            Optional<ArticleFile> articleFileOptional = articleFileRepository.findById(id);
+            if(articleFileOptional.isPresent()){
+                ArticleFile articleFile = articleFileOptional.get();
+                Path filePath;
+                if(articleFile.getType() != null && articleFile.getType().contains("image")) {
+                    filePath = Paths.get(storagePath + "/images/" + articleFile.getFilename());
+                }else {
+                    filePath = Paths.get(storagePath + "/files/" + articleFile.getFilename());
+                }
+                if (Files.exists(filePath)) {
+                    Files.delete(filePath);
+                }
+
+                String updatedFileName = StringUtils.cleanPath(Objects.requireNonNull(updatedArticleFile.getOriginalFilename()));
+                String uniqueUpdatedFileName = UUID.randomUUID() + "_" + updatedFileName;
+                articleFile.setFilename(uniqueUpdatedFileName);
+                articleFile.setType(updatedArticleFile.getContentType());
+                articleFileRepository.save(articleFile);
+
+                if(articleFile.getType() != null && articleFile.getType().contains("image")) {
+                    String updatedFilePath = storagePath + "/images/" + articleFile.getFilename();
+                    Files.copy(updatedArticleFile.getInputStream(), Paths.get(updatedFilePath), StandardCopyOption.REPLACE_EXISTING);
+                }else {
+                    String updatedFilePath = storagePath + "/files/" + articleFile.getFilename();
+                    Files.copy(updatedArticleFile.getInputStream(), Paths.get(updatedFilePath), StandardCopyOption.REPLACE_EXISTING);
+                }
+                return articleFile;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        throw new RuntimeException("ArticleFile not found");
+        return null;
     }
 
     public List<ArticleFile> getArticleFileByArticleId(Long id) {
