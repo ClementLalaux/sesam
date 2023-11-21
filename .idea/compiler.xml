@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Authentification" />
         <module name="Mail" />
+        <module name="Reinitialisation" />
         <module name="Image" />
         <module name="Article" />
         <module name="Texte" />
@@ -16,6 +17,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Fichier" target="17" />
+      <module name="Reinitialisation" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -25,6 +27,7 @@
       <module name="Fichier" options="-parameters" />
       <module name="Image" options="-parameters" />
       <module name="Mail" options="-parameters" />
+      <module name="Reinitialisation" options="-parameters" />
       <module name="Texte" options="-parameters" />
     </option>
   </component>

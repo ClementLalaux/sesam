@@ -32,7 +32,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.disable())
                 .exceptionHandling(e -> e.authenticationEntryPoint(entryPoint))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(r -> r.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(r -> r.requestMatchers("/api/auth/**", "/api/reinitialise/**").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(c -> {
                 });
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -10,11 +10,13 @@
         <option value="$PROJECT_DIR$/Mail/pom.xml" />
         <option value="$PROJECT_DIR$/Texte/pom.xml" />
         <option value="$PROJECT_DIR$/Image/pom.xml" />
+        <option value="$PROJECT_DIR$/Reinitialisation/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/Fichier/pom.xml" />
+        <option value="$PROJECT_DIR$/Reinitialisation/pom.xml" />
       </set>
     </option>
   </component>

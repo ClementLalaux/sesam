@@ -40,5 +40,19 @@ public class UtilisateurService {
         }
         throw new RuntimeException("Not found");
     }
+
+    public Utilisateur updatePassword(String email, String newPassword) {
+
+        Utilisateur utilisateur = trouverParEmail(email);
+        if(utilisateur != null){
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            utilisateur.setPassword(encodedPassword);
+            userRepository.save(utilisateur);
+            return utilisateur;
+        }
+        return null;
+    }
+
+
 }
 

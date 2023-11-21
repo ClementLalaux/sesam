@@ -69,5 +69,19 @@ public class UtilisateurController {
         }
     }
 
+    @PutMapping("/updatePassword")
+    public ResponseEntity<Utilisateur> updatePassword(@RequestBody String email ,@RequestBody String newPassword){
+        try {
+            Utilisateur utilisateur = utilisateurService.updatePassword(email,newPassword);
+            if(utilisateur != null){
+                return ResponseEntity.ok(utilisateur);
+            } else {
+                return ResponseEntity.status(401).body(null);
+            }
+        }catch (Exception e) {
+            return ResponseEntity.status(401).body(null);
+        }
+    }
+
 
 }
